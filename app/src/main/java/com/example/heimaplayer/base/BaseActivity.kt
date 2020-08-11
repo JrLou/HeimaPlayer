@@ -2,8 +2,10 @@ package com.example.heimaplayer.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.heimaplayer.ui.activity.MainActivity
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 /**
@@ -16,20 +18,19 @@ abstract class BaseActivity: AppCompatActivity(),AnkoLogger {
         setContentView(getLayoutId())
         initListener()
         initData()
-        debug { "哈哈" }
     }
 
     /**
      * 初始化数据
      */
-    protected fun initData() {
+    open protected fun initData() {
 
     }
 
     /**
      * adapter listener
      */
-    protected fun initListener() {
+    open protected fun initListener() {
 
     }
 
@@ -40,5 +41,13 @@ abstract class BaseActivity: AppCompatActivity(),AnkoLogger {
 
     protected fun myToast(msg:String){
         runOnUiThread { toast(msg)}
+    }
+
+    /**
+     * 开启activity并且finish当前界面
+     */
+    inline fun <reified T:BaseActivity>startActivityAndFinish(){
+        startActivity<T>()
+        finish()
     }
 }

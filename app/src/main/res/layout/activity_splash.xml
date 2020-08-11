@@ -3,5 +3,13 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
+    <ImageView
+            android:id="@+id/imageView"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_splash_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    ></ImageView>
 </LinearLayout>
