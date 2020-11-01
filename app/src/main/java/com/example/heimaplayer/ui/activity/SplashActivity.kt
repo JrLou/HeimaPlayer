@@ -7,7 +7,7 @@ import com.example.heimaplayer.R
 import com.example.heimaplayer.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashAcitvity: BaseActivity(), ViewPropertyAnimatorListener {
+class SplashActivity: BaseActivity(), ViewPropertyAnimatorListener {
     override fun onAnimationEnd(view: View?) {
         //进入主界面
 //        startActivity<MainActivity>()

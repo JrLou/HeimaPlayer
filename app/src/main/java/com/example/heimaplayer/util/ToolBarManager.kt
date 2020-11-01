@@ -31,4 +31,11 @@ interface ToolBarManager{
             }
         })
     }
+
+    /**
+     * 处理设置接麦呢的toolbar
+     */
+    fun initSettingToolbar(){
+        toolbar.setTitle("设置界面")
+    }
 }

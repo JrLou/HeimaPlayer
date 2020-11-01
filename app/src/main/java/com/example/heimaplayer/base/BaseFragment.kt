@@ -48,7 +48,7 @@ abstract class BaseFragment:Fragment(),AnkoLogger {
     /**
      * adapter listener
      */
-    protected fun initListener() {
+    open fun initListener() {
 
     }
 
