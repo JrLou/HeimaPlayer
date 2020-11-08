@@ -37,4 +37,6 @@ dependencies {
     implementation "org.jetbrains.anko:anko:0.10.1"
     //bottom-bar
     implementation "com.roughike:bottom-bar:2.3.1"
+    //okhttp3
+    implementation "com.squareup.okhttp3:okhttp:3.8.1"
 }

@@ -41,7 +41,7 @@ abstract class BaseFragment:Fragment(),AnkoLogger {
     /**
      * 数据初始化
      */
-    protected fun initData() {
+    protected open fun initData() {
 
     }
 

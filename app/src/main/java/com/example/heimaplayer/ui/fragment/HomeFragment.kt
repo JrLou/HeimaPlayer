@@ -22,4 +22,12 @@ class HomeFragment :BaseFragment(){
         var adapter = HomeAdapter()
         recycler_view.adapter = adapter
     }
+
+    override fun initData(){
+        loadDatas()
+    }
+
+    private fun loadDatas(){
+
+    }
 }
