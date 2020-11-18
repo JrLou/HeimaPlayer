@@ -10,7 +10,10 @@ public class URLProviderUtils {
      * @return url
      */
     public static String getHomeUrl(int offset, int size) {
-        String url = "http://192.168.8.167:3100/users/homeList?from=hmApp"
+//        String url = "http://192.168.8.167:3100/users/homeList?from=hmApp"
+//                + "&offset=" + offset
+//                + "&limits=" + size;
+        String url = "http://192.168.130.235:3100/users/homeList?from=hmApp"
                 + "&offset=" + offset
                 + "&limits=" + size;
         Log.i("Main_url", url);
