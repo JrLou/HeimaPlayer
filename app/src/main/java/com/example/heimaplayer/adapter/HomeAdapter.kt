@@ -9,16 +9,18 @@ import com.example.heimaplayer.widget.LoadMoreView
 
 class HomeAdapter:RecyclerView.Adapter<HomeAdapter.HomeHolder>(){
     private var list = ArrayList<HomeItemBean>()
-    fun updateList(list:List<HomeItemBean>){
-
-        this.list.clear()
-        this.list.addAll(list)
-        notifyDataSetChanged()
+    fun updateList(list:List<HomeItemBean>?){
+        list?.let{
+            this.list.clear()
+            this.list.addAll(list)
+            notifyDataSetChanged()
+        }
     }
-    fun loadMore(list:List<HomeItemBean>){
-
-        this.list.addAll(list)
-        notifyDataSetChanged()
+    fun loadMore(list:List<HomeItemBean>?){
+        list?.let{
+            this.list.addAll(list)
+            notifyDataSetChanged()
+        }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHolder {
         if(viewType == 1){

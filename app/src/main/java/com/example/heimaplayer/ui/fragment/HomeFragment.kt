@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment(), HomeView {
         //监听刷新
         refreshLayout.setOnRefreshListener {
             //刷新的监听
-            loadDatas()
+            presenter.loadDatas()
         }
 
         //监听列表滑动
@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment(), HomeView {
                         val lastPosition = manager.findLastVisibleItemPosition()
                         if (lastPosition == adapter.itemCount - 1) {
                             //最后一条已经显示了
-                            loadMore(adapter.itemCount - 1)
+                            presenter.loadMore(adapter.itemCount - 1)
                         }
                     }
                 }
@@ -80,109 +80,19 @@ class HomeFragment : BaseFragment(), HomeView {
 
     override fun initData() {
         //初始化数据
-//        loadDatas()
+        presenter.loadDatas()
     }
 
-    private fun loadDatas() {
-        val path = URLProviderUtils.getHomeUrl(0, 20)
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url(path)
-            .get()
-            .build()
-        client.newCall(request).enqueue(object : Callback {
-            /**
-             * 子线程调用
-             */
-            override fun onFailure(call: Call, e: IOException) {
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        //隐藏刷新控件
-                        refreshLayout.isRefreshing = false
-                        myToast("获取数据成功")
-                    }
-                })
-                myToast("获取数据失败")
-                println("获取数据失败：" + Thread.currentThread().name)
-                println("获取数据失败：" + e.stackTrace)
-                println("获取数据失败：" + e.message)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        //隐藏刷新控件
-                        refreshLayout.isRefreshing = false
-                        myToast("获取数据成功")
-                    }
-                })
-
-                val result = response?.body()?.string()
-                val gson = Gson()
-                val list = gson.fromJson<List<HomeItemBean>>(result, object :
-                    TypeToken<List<HomeItemBean>>() {}.type)
-                println("获取数据成功：" + list)
-                //刷新列表
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        adapter.updateList(list)
-                    }
-                })
-            }
-
-        })
+    override fun onError(message: String?) {
+        myToast("获取数据失败")
     }
-
-    /**
-     * 加载更多
-     */
-    private fun loadMore(offset: Int) {
-        val path = URLProviderUtils.getHomeUrl(offset, 20)
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url(path)
-            .get()
-            .build()
-        client.newCall(request).enqueue(object : Callback {
-            /**
-             * 子线程调用
-             */
-            override fun onFailure(call: Call, e: IOException) {
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        //隐藏刷新控件
-                        refreshLayout.isRefreshing = false
-                        myToast("获取数据成功")
-                    }
-                })
-                myToast("获取数据失败")
-                println("获取数据失败：" + Thread.currentThread().name)
-                println("获取数据失败：" + e.stackTrace)
-                println("获取数据失败：" + e.message)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        //隐藏刷新控件
-                        refreshLayout.isRefreshing = false
-                        myToast("获取数据成功")
-                    }
-                })
-
-                val result = response?.body()?.string()
-                val gson = Gson()
-                val list = gson.fromJson<List<HomeItemBean>>(result, object :
-                    TypeToken<List<HomeItemBean>>() {}.type)
-                println("获取数据成功：" + list)
-                //刷新列表
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        adapter.loadMore(list)
-                    }
-                })
-            }
-
-        })
+    override fun loadSuccess(list: List<HomeItemBean>?) {
+        //隐藏刷新控件
+        refreshLayout.isRefreshing = false
+        //刷新列表
+        adapter.updateList(list)
+    }
+    override fun loadMore(list: List<HomeItemBean>?) {
+        adapter.loadMore(list)
     }
 }
